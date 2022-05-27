@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:as3/Helpers/helpers.dart';
+import 'package:as3/controller/fb_user_controller.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class FbAuthController with Helpers {
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password );
       await userCredential.user!.sendEmailVerification();
+       await FbUserController().create(userCredential.user!, name);
       await signOut();
       showSnackBar(
           context: context,
